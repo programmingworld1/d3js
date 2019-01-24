@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+ <head>
+ <body>
+  <script>
+  
+   console.log(d3);
+   
+   ///////////////////////////////////
+   // Tutorial 2 (select & append) ///
+   ///////////////////////////////////
+   
+   // d3 = an object, collectie van data
+   // select = selecteren van een element
+   // append = toevoegen
+   // text = tekst die je toevoegd aan de paragraaf
+   
+   /*
+   d3.select("body").append("p").text("Boont");
+   d3.select("body").append("br");
+   d3.select("body").append("p").text("Boont");
+   */
+   
+   
+   //////////////////////////////
+   // Tutorial 3 (SVG shapes) ///
+   //////////////////////////////
+   
+   // SVG scaleble vector Graphics, it is a way to create 2 demintional graphics to our webpage. 
+   // attr = 
+   // style =
+   // svg = een container/cavas, je kan geen svg-circle op een html document doen
+   // cx = c stands for center en x horizontal
+   // cy = c stands for center and y for vertical
+   // x1 = eerste horizontale punt van de lijn, dus meest rechts.
+   // y1 =  eerste verticale positie van boven
+   // x2 = de einde van de horizontale punt naar rechts
+   // y2 = de einde van de verticale punt naar beneden
+   // stroke = kleur voor lijn
+   // stroke-width = breedte voor lijn
+   
+   /*
+   d3.select("body")
+	.append("p")
+	.style("color", "red")
+	.text("Boont");
+
+	var canvas = d3.select("body")
+				.append("svg")
+				.attr("width", 500)
+				.attr("height", 500);
+				
+	var circle = canvas
+				.append("circle")
+				.attr("cx", 250)
+				.attr("cy", 250)
+				.attr("r", 50)
+				.attr("fill", "red");
+				
+	var rect = canvas
+				.append("rect")
+				.attr("height", 100)
+				.attr("width", 100);
+				
+	var line = canvas
+				.append("line")
+				.attr("x1", 0)
+				.attr("y1", 100)
+				.attr("x2", 400)
+				.attr("y2", 400)
+				.attr("stroke", "green")
+				.attr("stroke-width", 10);
+	*/
+
+   //////////////////////////////////////////////////////////////////////
+   // Tutorial 4 & 5 & 6 (visualization data en scaling, groups, axes)///
+   //////////////////////////////////////////////////////////////////////
+   
+   // selectAll = selecteert alle elementen tussen de quotes
+   // als de array meer heeft van dan de bestaande vierkantjes dan maakt die placeholders.
+   // function = neemt een input, returned een waarde
+   // d = je kan het alles noemen zoals je wilt, d staat voor elke dataelement dat we hebben in de placeholder selectie
+   // i = omdat die enter een selectie is zeg maar, een soort van forloop dan is "i" de plek waar die is met selecteren in de array
+   // enter = returned placeholders voor elke data element waar geen dom-elementen op de scherm zijn
+   // scales = 
+   // domain = original range, first value minimum and the second the largest value in the data set.
+   // range = what it should be.
+   // axes = 
+   // door group te doen dan kan je transformations doen
+   // transform = move to the right, rotating etc..
+   
+   /*
+   var dataArray = [20, 40, 50, 160];
+   var width = 500;
+   var height = 500;
+   
+   var widthScale = d3.scaleLinear()
+					.domain([0, d3.max(dataArray)])
+					.range([0, 500])
+					
+   var color = d3.scaleLinear()
+					.domain([0, d3.max(dataArray)])
+					.range(["red", "blue"])
+
+   var canvas = d3.select("body")
+				.append("svg")
+				.attr("width", width)
+				.attr("height", height)
+				.append("g")
+				.attr("transform", "translate(20, 20)");
+				
+   var axis = d3.axisBottom(widthScale).ticks(10);
+
+   canvas.append("g")
+			.attr("transform", "translate(0, 400)")
+			.call(axis);
+				
+
+				
+	var bars = canvas.selectAll("rect") // we slecteren alle vierkantjes maar er zijn geen vierkantjes dus het returned een empty selectie, maar de empty dingen kunnen we connecteren met de data. en met .data kan je bepalen waar de data vandaan komt.
+				.data(dataArray)
+				.enter() 
+					.append("rect")
+					.attr("width", function(d){return widthScale(d)}) // gescalde waarde
+					.attr("height", 50)
+					.attr("fill", function (d) {return color(d)})
+				.attr("y", function(d,i){return i * 100});				
+	*/
+	
+	
+   /////////////////////////////
+   // Tutorial 8 (transition)///
+   /////////////////////////////
+   
+   // each = een event listener, als je dit na de transition doet, dan kan je bepalen waar de listener nar moet luisteren
+   // transition =
+   // duration = 
+   // delay =
+   // end = end van de transitie
+   // this = de element dat we gebruiken dus de circle
+	
+	/*
+	var canvas = d3.select("body")
+				.append("svg")
+				.attr("width", 500)
+				.attr("height", 500);
+				
+	var circle = canvas.append("circle")
+					.attr("cx", 50)
+					.attr("cy", 50)
+					.attr("r", 50)
+			        .transition()
+					.duration(1000)
+					.delay(1000)
+			     	.attr("cx", 150)
+					.transition()
+					.attr("cy", 200)
+	 				.transition()
+					.attr("cx", 400)
+					.on("end", function(){d3.select(this).attr("fill", "red");});
+	*/
+
+				
+   /* 
+   // Tutorial 10
+   d3.json("mydata.json", function(error, data) { 
+   
+    var canvas = d3.select("body")
+   .append("svg")
+   .attr("width", 500)
+   .attr("height", 500)
+	
+	canvas.selectAll("rect")
+	.data(data)
+	.enter()
+		.append("rect")
+		.attr("width", function(d) { return d.age * 10; })
+		.attr("height", 48)
+		.attr("y", function(d, i) { return i * 50; })
+		.attr("fill", "blue");
+		
+		canvas.selectAll("text")
+		.data(data)
+		.enter()
+			.append("text")
+			.attr("fill", "white")
+			.attr("y", function(d, i) { return i * 50 + 24; })
+			.text(function(d) {return d.name;})
+
+   } )
+   */
+   
+   
+      /////////////////////////////
+   // Tutorial 11 (paths) ///////
+   /////////////////////////////
+	
+	/*var canvas = d3.select("body").append("svg")
+		.attr("width", 500)
+		.attr("height", 500)
+		
+	var data = [
+		{x: 10, y: 20},
+		{x: 110, y: 60},
+		{x: 50, y: 710}
+	];
+
+	var group = canvas.append("g")
+				.attr("transform", "translate(100,100)");
+				
+	var line = d3.line()
+				.x(function(d) {return d.x;})
+				.y(function(d) {return d.y;});
+						
+	group.selectAll("path")
+			.data([data]) // we bound our data to the empty selection
+			.enter()
+			.append("path")
+			.attr("d", line)
+			.attr("fill", "none")
+			.attr("stroke", "#000")
+			.attr("stroke-width", 10);	
+	*/
+   
+   /////////////////////////////
+   // Tutorial 12 (arcs) ///////
+   /////////////////////////////
+   // Een arc is een onderdeel van een circle
+   // we gebruiken niet de line-path generator maar een arc-path generator
+   
+    /*var canvas = d3.select("body").append("svg")
+		.attr("width", 500)
+		.attr("height", 500);
+		
+	var group = canvas.append("g")
+		.attr("transform", "translate(100, 100)");
+		
+	var r = 100; // radius
+	var p = Math.PI * 2; // full distance around our circle, 6.28 dus een volle circle
+		
+	var arc = d3.arc()
+		.innerRadius(r - 20) // distance from the center
+		.outerRadius(r) // distance from the outerline
+		.startAngle(0) // waar de arc/rondje begint
+		.endAngle(p) // waar de arc/rondje eind 
+		
+		group.append("path")
+		.attr("d", arc);
+   */
+   
+   /////////////////////////////
+   // Tutorial 13 (Pie layout) /
+   /////////////////////////////
+   // pie layout : neemt alle data, voor elke data element het returned met een startangle en endangle ...
+   
+   
+   
+   
+    var data = [10, 50, 80];
+    var r = 300;
+   
+   var color = d3.scaleOrdinal()
+		.range(["red", "blue", "orange"]);
+   
+    var canvas = d3.select("body").append("svg")
+		.attr("width", 1500)
+		.attr("height", 1500);
+	
+    var group = canvas.append("g")
+		.attr("transform", "translate(300, 300)");
+   
+    var arc = d3.arc()
+		.innerRadius(200)
+		.outerRadius(r);
+		
+	var pie = d3.pie()
+		.value(function (d) { return d; });
+		
+	var arcs = group.selectAll(".arc")
+		.data(pie(data)) // bind dat to the selection ,maar eerst data naar de pielayout sturen
+		.enter()
+		.append("g")		
+		.attr("class", "arc");
+		
+	arcs.append("path")
+		.attr("d", arc)
+		.attr("fill", function (d) { return color(d.data)});
+		
+	arcs.append("text") // we append to each group elemtn once again, elke arcs zijn in een group
+		.attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")";}) // returns center of each arc
+		.attr("text-anchor", "middle")
+		.attr("font-size", "1.5em")
+		.text(function (d) { return d.data;});
+   
+  </script>
+ </body>
+</html>
